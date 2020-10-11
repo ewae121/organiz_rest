@@ -1,0 +1,131 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger ReST Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /task:
+    get:
+      operationId: task.read_all
+      tags:
+        - Task
+      summary: Read the entire list of task
+      description: Read the list of task
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of task to get from task
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning of list where to start gathering task
+          required: false
+      responses:
+        200:
+          description: Successfully read task list operation
+          schema:
+            type: array
+            items:
+              properties:
+                name:
+                  type: string
+                id:
+                  type: string
+
+    post:
+      operationId: task.create
+      tags:
+        - Task
+      summary: Create a task and add it to the task list
+      description: Create a new task in the task list
+      parameters:
+        - name: task
+          in: body
+          description: Person to create
+          required: True
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: First name of task to create
+              id:
+                type: string
+                description: Last name of task to create
+      responses:
+        201:
+          description: Successfully created task in list
+
+  /task/{tid}:
+    get:
+      operationId: task.read_one
+      tags:
+        - Task
+      summary: Read one task from the task list
+      description: Read one task from the task list
+      parameters:
+        - name: tid
+          in: path
+          description: Last name of the task to get from the list
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read task from task list operation
+          schema:
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+
+    put:
+      operationId: task.update
+      tags:
+        - Task
+      summary: Update a task in the task list
+      description: Update a task in the task list
+      parameters:
+        - name: tid
+          in: path
+          description: Last name of the task to update in the list
+          type: string
+          required: True
+        - name: task
+          in: body
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              id:
+                type: string
+      responses:
+        200:
+          description: Successfully updated task in task list
+
+    delete:
+      operationId: task.delete
+      tags:
+        - Task
+      summary: Delete a task from the task list
+      description: Delete a task
+      parameters:
+        - name: tid
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a task from task list
+
