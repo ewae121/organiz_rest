@@ -22,7 +22,7 @@ paths:
       parameters:
         - name: length
           in: query
-          type: integer
+          type: integer 
           description: Number of task to get from task
           required: false
         - name: offset
@@ -40,7 +40,7 @@ paths:
                 name:
                   type: string
                 id:
-                  type: string
+                  type: integer
 
     post:
       operationId: task.create
@@ -60,34 +60,11 @@ paths:
                 type: string
                 description: First name of task to create
               id:
-                type: string
-                description: Last name of task to create
+                type: integer
+                description: Task id
       responses:
         201:
           description: Successfully created task in list
-
-  /task/{id}:
-    get:
-      operationId: task.read_one
-      tags:
-        - Task
-      summary: Read one task from the task list
-      description: Read one task from the task list
-      parameters:
-        - name: id
-          in: path
-          description: Last name of the task to get from the list
-          type: string
-          required: True
-      responses:
-        200:
-          description: Successfully read task from task list operation
-          schema:
-            properties:
-              id:
-                type: string
-              name:
-                type: string
 
     put:
       operationId: task.update
@@ -96,12 +73,8 @@ paths:
       summary: Update a task in the task list
       description: Update a task in the task list
       parameters:
-        - name: id
-          in: path
-          description: Last name of the task to update in the list
-          type: string
-          required: True
         - name: task
+          required: True
           in: body
           schema:
             type: object
@@ -109,7 +82,7 @@ paths:
               name:
                 type: string
               id:
-                type: string
+                type: integer
       responses:
         200:
           description: Successfully updated task in task list
@@ -123,9 +96,32 @@ paths:
       parameters:
         - name: id
           in: path
-          type: string
+          type: integer 
           required: True
       responses:
         200:
           description: Successfully deleted a task from task list
+
+  /task/{id}:
+    get:
+      operationId: task.read_one
+      tags:
+        - Task
+      summary: Read one task from the task list
+      description: Read one task from the task list
+      parameters:
+        - name: id
+          in: path
+          description: Last name of the task to get from the list
+          type: integer 
+          required: True
+      responses:
+        200:
+          description: Successfully read task from task list operation
+          schema:
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
 

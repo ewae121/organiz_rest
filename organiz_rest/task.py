@@ -15,18 +15,18 @@ def get_timestamp():
 
 
 # Data to serve with our API
-TASK = {
-  "1": { 'id': 1, 'name': 'Init front' },
-  "2": { 'id': 2, 'name': 'Make back-end' },
-  "3": { 'id': 3, 'name': 'Try deploy localy' },
-  "4": { 'id': 4, 'name': 'Try deploy to Internet' },
-  "5": { 'id': 5, 'name': 'Add authentication' },
-  "6": { 'id': 6, 'name': 'Add features' },
-  "7": { 'id': 7, 'name': 'Try using OVH' },
-  "8": { 'id': 8, 'name': 'Let`s go to prod :)' },
-  "9": { 'id': 9, 'name': 'Test user experience' },
-  "10": { 'id': 10, 'name': '...' }
-}
+TASK = [
+  { 'id': 0, 'name': 'Init front' },
+  { 'id': 1, 'name': 'Make back-end' },
+  { 'id': 2, 'name': 'Try deploy localy' },
+  { 'id': 3, 'name': 'Try deploy to Internet' },
+  { 'id': 4, 'name': 'Add authentication' },
+  { 'id': 5, 'name': 'Add features' },
+  { 'id': 6, 'name': 'Try using OVH' },
+  { 'id': 7, 'name': 'Let`s go to prod :)' },
+  { 'id': 8, 'name': 'Test user experience' },
+  { 'id': 9, 'name': '...' }
+]
 
 
 def read_all():
@@ -36,7 +36,7 @@ def read_all():
     :return:        json string of list of task
     """
     # Create the list of task from our data
-    return [TASK[key] for key in sorted(TASK.keys())]
+    return TASK
 
 
 def read_one(id):
@@ -47,8 +47,8 @@ def read_one(id):
     :return:        task matching id
     """
     # Does the task exist in task?
-    if id in TASK:
-        task = TASK.get(id)
+    if id < len(TASK):
+        task = TASK[id]
 
     # otherwise, nope, not found
     else:
@@ -70,7 +70,7 @@ def create(task):
     name = task.get("name", None)
 
     # Does the task exist already?
-    if id not in TASK and id is not None:
+    if id < len(TASK):
         TASK[id] = {
             "id": id,
             "name": name
@@ -87,16 +87,17 @@ def create(task):
         )
 
 
-def update(id, task):
+def update(task):
     """
     This function updates an existing task in the task structure
     :param id:   last name of task to update in the task structure
-    :param task:  task to update
-    :return:        updated task structure
+    :param task: task to update
+    :return:     updated task structure
     """
     # Does the task exist in task?
-    if id in TASK:
-        TASK[id]["fname"] = task.get("fname")
+    id = task.get('id')
+    if id < len(TASK):
+        TASK[id]["name"] = task.get("name")
         TASK[id]["timestamp"] = get_timestamp()
 
         return TASK[id]
@@ -115,7 +116,7 @@ def delete(id):
     :return:        200 on successful delete, 404 if not found
     """
     # Does the task to delete exist?
-    if id in TASK:
+    if id < len(TASK):
         del TASK[id]
         return make_response(
             "{id} successfully deleted".format(id=id), 200
