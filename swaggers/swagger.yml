@@ -87,21 +87,6 @@ paths:
         200:
           description: Successfully updated task in task list
 
-    delete:
-      operationId: task.delete
-      tags:
-        - Task
-      summary: Delete a task from the task list
-      description: Delete a task
-      parameters:
-        - name: id
-          in: path
-          type: integer 
-          required: True
-      responses:
-        200:
-          description: Successfully deleted a task from task list
-
   /task/{id}:
     get:
       operationId: task.read_one
@@ -125,3 +110,17 @@ paths:
               name:
                 type: string
 
+    delete:
+      operationId: task.delete
+      tags:
+        - Task
+      summary: Delete a task from the task list
+      description: Delete a task
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a task from task list
