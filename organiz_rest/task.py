@@ -66,25 +66,17 @@ def create(task):
     :param task:  task to create in task structure
     :return:        201 on success, 406 on task exists
     """
-    id = task.get("id", None)
+    id = len(TASK)
     name = task.get("name", None)
 
     # Does the task exist already?
-    if id < len(TASK):
-        TASK[id] = {
-            "id": id,
-            "name": name
-        }
-        return make_response(
-            "{id} successfully created".format(id=id), 201
-        )
+    task = {
+        "id": id,
+        "name": name
+    }
+    TASK.append(task)
 
-    # Otherwise, they exist, that's an error
-    else:
-        abort(
-            406,
-            "Task with id {id} already exists".format(id=id),
-        )
+    return task
 
 
 def update(task):
