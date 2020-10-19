@@ -29,15 +29,21 @@ TASK = [
 ]
 
 
-def read_all():
+def read_all(name):
     """
     This function responds to a request for /api/task
     with the complete lists of task
     :return:        json string of list of task
     """
     # Create the list of task from our data
-    return TASK
-
+    if name != "all_tasks_requested":
+        tasks = []
+        for task in TASK:
+            if name in task.get('name'):
+                tasks.append(task)
+        return tasks
+    else:
+        return TASK
 
 def read_one(id):
     """

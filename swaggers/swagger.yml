@@ -20,16 +20,11 @@ paths:
       summary: Read the entire list of task
       description: Read the list of task
       parameters:
-        - name: length
+        - name: name
           in: query
-          type: integer 
-          description: Number of task to get from task
-          required: false
-        - name: offset
-          in: query
-          type: integer
-          description: Offset from beginning of list where to start gathering task
-          required: false
+          type: string
+          description: String to look in name(all_tasks_requested means all)
+          required: true
       responses:
         200:
           description: Successfully read task list operation
